@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Dashboard - B15-B16</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-color-scheme="dark">
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">Alumni Hub</h2>
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <span class="sr-only">Close menu</span>
+                ✕
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="sidebar-link active" data-section="dashboard">
+                <span class="sidebar-icon">📊</span>
+                Overview
+            </a></li>
+            <li><a href="#" class="sidebar-link" data-section="organizations">
+                <span class="sidebar-icon">🏢</span>
+                Organizations
+            </a></li>
+            <li><a href="#" class="sidebar-link" data-section="domains">
+                <span class="sidebar-icon">🎯</span>
+                Domains
+            </a></li>
+            <li><a href="#" class="sidebar-link" data-section="geography">
+                <span class="sidebar-icon">🌍</span>
+                Geography
+            </a></li>
+            <li><a href="#" class="sidebar-link" data-section="directory">
+                <span class="sidebar-icon">📋</span>
+                Unique Job Descriptions
+            </a></li>
+            <li><a href="#" class="sidebar-link" data-section="analytics">
+                <span class="sidebar-icon">📈</span>
+                Recruitment
+            </a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                    <span class="hamburger"></span>
+                </button>
+                <h1 class="page-title">Alumni Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="globalSearch" placeholder="Search organizations...">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <button class="btn btn--outline" id="exportBtn">Export Data</button>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+            </div>
+        </header>
+
+        <!-- Dashboard Section (Overview - Only Metric Cards) -->
+        <section id="dashboard" class="content-section active">
+            <div class="stats-grid">
+                <div class="stat-card featured">
+                    <div class="stat-icon">🏢</div>
+                    <div class="stat-content">
+                        <div class="stat-value" data-count="43">0</div>
+                        <div class="stat-label">B15 Organizations</div>
+                    </div>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat-card active">
+                    <div class="stat-icon">🏛️</div>
+                    <div class="stat-content">
+                        <div class="stat-value" data-count="44">0</div>
+                        <div class="stat-label">B16 Organizations</div>
+                    </div>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔗</div>
+                    <div class="stat-content">
+                        <div class="stat-value" data-count="9">0</div>
+                        <div class="stat-label">Organizations in Both Batches</div>
+                    </div>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <div class="stat-value" data-count="34">0</div>
+                        <div class="stat-label">B15-Only Organizations</div>
+                    </div>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <div class="stat-value" data-count="35">0</div>
+                        <div class="stat-label">B16-Only Organizations</div>
+                    </div>
+                    <div class="stat-glow"></div>
+                </div>
+                <div class="stat-card highlight">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-content">
+                        <div class="stat-value" data-count="80">0</div>
+                        <div class="stat-label">Total Unique Organizations</div>
+                    </div>
+                    <div class="stat-glow"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizations Section -->
+        <section id="organizations" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Organization Analysis</h2>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">Organization Distribution</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 350px;">
+                        <canvas id="orgDistributionChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Batch Comparison</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 350px;">
+                        <canvas id="batchComparisonChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card full-width">
+                    <h3 class="chart-title">Organization Lists by Batch</h3>
+                    <div class="org-lists-container">
+                        <div class="org-list">
+                            <h4>B15 Organizations (43)</h4>
+                            <div class="org-items" id="b15Organizations"></div>
+                        </div>
+                        <div class="org-list">
+                            <h4>B16 Organizations (44)</h4>
+                            <div class="org-items" id="b16Organizations"></div>
+                        </div>
+                        <div class="org-list">
+                            <h4>Organizations in Both Batches (9)</h4>
+                            <div class="org-items" id="bothBatchesOrgs"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Domain Analysis Section -->
+        <section id="domains" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Domain Analysis</h2>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">Working Domains Distribution</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 400px;">
+                        <canvas id="domainChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Domain Focus Distribution</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 400px;">
+                        <canvas id="domainFocusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Geographic Analysis Section -->
+        <section id="geography" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Geographic Coverage</h2>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">State-wise Job Description Coverage</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 450px;">
+                        <canvas id="stateChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Top States</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 450px;">
+                        <canvas id="topStatesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Unique Job Descriptions Section -->
+        <section id="directory" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Unique Job Description Analysis</h2>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">Job Description Types</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 350px;">
+                        <canvas id="jobTypesChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Job Level Distribution</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 350px;">
+                        <canvas id="jobLevelChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card full-width">
+                    <h3 class="chart-title">Salary Range Distribution</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 300px;">
+                        <canvas id="salaryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recruitment Analysis Section -->
+        <section id="analytics" class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Recruitment Performance</h2>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3 class="chart-title">Top Recruiting Organizations</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 350px;">
+                        <canvas id="recruitmentChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Recruitment by Batch</h3>
+                    <div class="chart-wrapper" style="position: relative; height: 350px;">
+                        <canvas id="batchRecruitmentChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card full-width">
+                    <h3 class="chart-title">Total Recruitment Numbers</h3>
+                    <div class="recruitment-summary">
+                        <div class="recruitment-card">
+                            <h4>Piramal Pharma Limited</h4>
+                            <div class="recruitment-stats">
+                                <span class="batch-stat">B15: 3</span>
+                                <span class="batch-stat">B16: 4</span>
+                                <span class="total-stat">Total: 7</span>
+                            </div>
+                        </div>
+                        <div class="recruitment-card">
+                            <h4>Open Links Foundation</h4>
+                            <div class="recruitment-stats">
+                                <span class="batch-stat">B15: 5</span>
+                                <span class="batch-stat">B16: 16</span>
+                                <span class="total-stat">Total: 21</span>
+                            </div>
+                        </div>
+                        <div class="recruitment-card">
+                            <h4>Piramal Foundation</h4>
+                            <div class="recruitment-stats">
+                                <span class="batch-stat">B15: 84</span>
+                                <span class="batch-stat">B16: 13</span>
+                                <span class="total-stat">Total: 97</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
